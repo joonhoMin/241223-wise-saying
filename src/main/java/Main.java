@@ -24,6 +24,8 @@ class App{
 
         System.out.println("== 명언 앱 ==");
 
+        int lastNo=0;
+
         while(true)
         {
             System.out.print("명령) ");
@@ -35,10 +37,9 @@ class App{
                 System.out.print("작가 : ");
                 scanner.nextLine();
 
-                System.out.println("1번 명령이 등록되었습니다.");
+                System.out.println(++lastNo+"번 명령이 등록되었습니다.");
             }
-
-            if(command.equals("종료")){
+            else if(command.equals("종료")){
                 break;
             }
         }
