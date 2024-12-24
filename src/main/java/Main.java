@@ -11,6 +11,10 @@ public class Main {
 }
 
 class App{
+
+    List<명언> list=new ArrayList<>();
+    int lastNo=0;
+
     public void run(){
 //       == 명언 앱 ==
 //명령) 등록
@@ -47,9 +51,6 @@ class App{
 
         System.out.println("== 명언 앱 ==");
 
-        int lastNo=0;
-        List<명언> list=new ArrayList<>();
-
         while(true)
         {
             System.out.print("명령) ");
@@ -60,7 +61,7 @@ class App{
                 String 명언내용=scanner.nextLine();
                 System.out.print("작가 : ");
                 String 작가=scanner.nextLine();
-                list.add(new 명언(++lastNo,명언내용,작가));
+                add(명언내용,작가);
 
                 System.out.println(lastNo+"번 명언이 등록되었습니다.");
             }
@@ -115,6 +116,11 @@ class App{
             }
         }
     }
+
+    public void add(String 명언내용, String 작가) {
+        list.add(new 명언(++lastNo,명언내용,작가));
+    }
+
 }
 
 class 명언{
