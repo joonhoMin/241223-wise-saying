@@ -56,52 +56,50 @@ public class App {
                 delWiseSaying(delId);
             } else if (Pattern.matches("^수정\\?id=\\d+$", command)) {
                 int corId = Integer.parseInt(command.substring(6));
-                boolean find = false;
-                for (int i = 0; i < list.size(); i++) {
-                    if (list.get(i).get번호() == corId) {
-                        System.out.println("명언(기존) : " + list.get(i).get명언내용());
-                        System.out.print("명언 : ");
-                        String new명언 = scanner.nextLine();
-                        list.get(i).set명언내용(new명언);
-                        System.out.println("작가(기존) : " + list.get(i).get작가());
-                        System.out.print("작가 : ");
-                        String new작가 = scanner.nextLine();
-                        list.get(i).set작가(new작가);
-                        find = true;
-                        break;
-                    }
-                }
-                if (!find)
-                    System.out.println(corId + "번 명언은 존재하지 않습니다.");
+                updateWiseSaying(corId);
             } else if (command.equals("종료")) {
                 break;
             }
         }
     }
 
-    private void delWiseSaying(int delId) {
-        boolean find = false;
-                /*
-                for (int i = 0; i < list.size(); i++) {
-                    if (list.get(i).get번호() == delId) {
-                        list.remove(i);
-                        System.out.println(delId + "번 명언이 삭제되었습니다.");
-                        find = true;
-                        break;
-                    }
-                }
-                */
-        for(int i=delId-1;i>=0;i--){
-            if (list.get(i).get번호() == delId) {
-                list.remove(i);
-                System.out.println(delId + "번 명언이 삭제되었습니다.");
-                find = true;
-                break;
+    private 명언 findWiseSaying(int targetId){
+        for(명언 wiseSaying : list) {
+            if(wiseSaying.get번호() == targetId) {
+                return wiseSaying;
             }
         }
+        return null;
+    }
 
-        if (!find)
+    private void updateWiseSaying(int corId) {
+        명언 wisesaying=findWiseSaying(corId);
+
+        if(wisesaying==null) {
+            System.out.println(corId + "번 명언은 존재하지 않습니다.");
+            return;
+        }
+
+        System.out.println("명언(기존) : " + wisesaying.get명언내용());
+        System.out.print("명언 : ");
+        String new명언 = scanner.nextLine();
+        wisesaying.set명언내용(new명언);
+        System.out.println("작가(기존) : " + wisesaying.get작가());
+        System.out.print("작가 : ");
+        String new작가 = scanner.nextLine();
+        wisesaying.set작가(new작가);
+    }
+
+
+    private void delWiseSaying(int delId) {
+        명언 wisesaying=findWiseSaying(delId);
+        if(wisesaying==null) {
             System.out.println(delId + "번 명언은 존재하지 않습니다.");
+            return;
+        }
+        list.remove(wisesaying);
+        System.out.println(delId + "번 명언이 삭제되었습니다.");
+        
     }
 
     private void printWiseSayingList() {
