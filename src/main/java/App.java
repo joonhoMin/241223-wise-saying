@@ -5,7 +5,10 @@ import java.util.regex.Pattern;
 
 public class App {
 
-    private final List<명언> list = new ArrayList<>();
+    //명언 저장 리스트
+    private final List<WiseSaying> list = new ArrayList<>();
+
+    //마지막 명언 번호
     private int lastNo = 0;
     private final Scanner scanner = new Scanner(System.in);
 
@@ -63,8 +66,8 @@ public class App {
         }
     }
 
-    private 명언 findWiseSaying(int targetId){
-        for(명언 wiseSaying : list) {
+    private WiseSaying findWiseSaying(int targetId){
+        for(WiseSaying wiseSaying : list) {
             if(wiseSaying.get번호() == targetId) {
                 return wiseSaying;
             }
@@ -73,7 +76,7 @@ public class App {
     }
 
     private void updateWiseSaying(int corId) {
-        명언 wisesaying=findWiseSaying(corId);
+        WiseSaying wisesaying=findWiseSaying(corId);
 
         if(wisesaying==null) {
             System.out.println(corId + "번 명언은 존재하지 않습니다.");
@@ -92,7 +95,7 @@ public class App {
 
 
     private void delWiseSaying(int delId) {
-        명언 wisesaying=findWiseSaying(delId);
+        WiseSaying wisesaying=findWiseSaying(delId);
         if(wisesaying==null) {
             System.out.println(delId + "번 명언은 존재하지 않습니다.");
             return;
@@ -105,7 +108,7 @@ public class App {
     private void printWiseSayingList() {
         System.out.println("번호 / 작가 / 명언");
         System.out.println("------------------");
-        for (명언 tmp명언: list.reversed()) {
+        for (WiseSaying tmp명언: list.reversed()) {
             System.out.println(tmp명언.get번호() + " / " + tmp명언.get작가() + " / " + tmp명언.get명언내용());
         }
     }
@@ -120,7 +123,7 @@ public class App {
     }
 
     public void add(String 명언내용, String 작가) {
-        list.add(new 명언(++lastNo, 명언내용, 작가));
+        list.add(new WiseSaying(++lastNo, 명언내용, 작가));
     }
 
 }
