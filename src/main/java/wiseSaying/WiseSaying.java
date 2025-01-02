@@ -1,3 +1,5 @@
+package wiseSaying;
+
 public class WiseSaying {
     private int 번호;
     private String 명언내용;
