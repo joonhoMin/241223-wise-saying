@@ -1,3 +1,4 @@
+import wiseSaying.SystemController;
 import wiseSaying.WiseSayingController;
 
 import java.util.Scanner;
@@ -6,10 +7,13 @@ import java.util.regex.Pattern;
 public class App {
 
     private final WiseSayingController wiseSayingController;
-    private final Scanner scanner = new Scanner(System.in);
+    private final SystemController systemController;
+    private final Scanner scanner;
 
     public App(){
-        wiseSayingController = new WiseSayingController();
+        scanner = new Scanner(System.in);
+        wiseSayingController = new WiseSayingController(scanner);
+        systemController= new SystemController();
     }
 
 
@@ -45,6 +49,8 @@ public class App {
 //2 / 홍길동 / 현재와 자신을 사랑하라.
 //명령) 종료
 
+        wiseSayingController.makeTestData();
+
         System.out.println("== 명언 앱 ==");
 
         while (true) {
@@ -62,6 +68,7 @@ public class App {
                 int corId = Integer.parseInt(command.substring(6));
                 wiseSayingController.updateWiseSaying(corId);
             } else if (command.equals("종료")) {
+                systemController.exit();
                 break;
             }
         }

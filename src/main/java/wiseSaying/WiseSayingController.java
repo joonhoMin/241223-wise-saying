@@ -1,52 +1,50 @@
 package wiseSaying;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class WiseSayingController {
-    //명언 저장 리스트
-    private final List<WiseSaying> list = new ArrayList<>();
 
-    //마지막 명언 번호
-    private int lastNo = 0;
-    private final Scanner scanner = new Scanner(System.in);
+    private final WiseSayingService wiseSayingService;
 
-    private WiseSaying findWiseSaying(int targetId){
-        for(WiseSaying wiseSaying : list) {
-            if(wiseSaying.get번호() == targetId) {
-                return wiseSaying;
-            }
-        }
-        return null;
+
+    private final Scanner scanner;
+
+    public WiseSayingController(Scanner scanner){
+        this.scanner=scanner;
+        this.wiseSayingService= new WiseSayingService();
     }
 
-    public void updateWiseSaying(int corId) {
-        WiseSaying wisesaying=findWiseSaying(corId);
 
-        if(wisesaying==null) {
+    public void updateWiseSaying(int corId) {
+        WiseSaying wiseSaying=wiseSayingService.findById(corId);
+
+        if(wiseSaying==null) {
             System.out.println(corId + "번 명언은 존재하지 않습니다.");
             return;
         }
 
-        System.out.println("명언(기존) : " + wisesaying.get명언내용());
+        System.out.println("명언(기존) : " + wiseSaying.get명언내용());
         System.out.print("명언 : ");
         String new명언 = scanner.nextLine();
-        wisesaying.set명언내용(new명언);
-        System.out.println("작가(기존) : " + wisesaying.get작가());
+        System.out.println("작가(기존) : " + wiseSaying.get작가());
         System.out.print("작가 : ");
         String new작가 = scanner.nextLine();
-        wisesaying.set작가(new작가);
+
+        wiseSayingService.update(wiseSaying,new명언,new작가);
+
     }
 
 
     public void delWiseSaying(int delId) {
-        WiseSaying wisesaying=findWiseSaying(delId);
+        WiseSaying wisesaying=wiseSayingService.findById(delId);
         if(wisesaying==null) {
             System.out.println(delId + "번 명언은 존재하지 않습니다.");
             return;
         }
-        list.remove(wisesaying);
+
+        wiseSayingService.remove(wisesaying);
+
         System.out.println(delId + "번 명언이 삭제되었습니다.");
 
     }
@@ -54,7 +52,10 @@ public class WiseSayingController {
     public void printWiseSayingList() {
         System.out.println("번호 / 작가 / 명언");
         System.out.println("------------------");
-        for (WiseSaying tmp명언: list.reversed()) {
+
+        ArrayList<WiseSaying> wiseSayings=wiseSayingService.findAll();
+
+        for (WiseSaying tmp명언: wiseSayings.reversed()) {
             System.out.println(tmp명언.get번호() + " / " + tmp명언.get작가() + " / " + tmp명언.get명언내용());
         }
     }
@@ -64,13 +65,13 @@ public class WiseSayingController {
         String 명언내용 = scanner.nextLine();
         System.out.print("작가 : ");
         String 작가 = scanner.nextLine();
-        add(명언내용, 작가);
-        System.out.println(lastNo + "번 명언이 등록되었습니다.");
+        WiseSaying wiseSaying=wiseSayingService.add(명언내용, 작가);
+        System.out.println(wiseSaying.get번호() + "번 명언이 등록되었습니다.");
     }
 
-    public void add(String 명언내용, String 작가) {
-        list.add(new WiseSaying(++lastNo, 명언내용, 작가));
+    public void makeTestData() {
+        wiseSayingService.add("꿈을 지녀라. 그러면 어려운 현실을 이길 수 있다.", "월트 디즈니");
+        wiseSayingService.add("현재를 사랑하라", "작자 미상");
     }
-
 
 }
