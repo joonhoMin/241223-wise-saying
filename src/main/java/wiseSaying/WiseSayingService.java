@@ -7,26 +7,25 @@ public class WiseSayingService {
     private final WiseSayingRepository wiseSayingRepository;
 
     public WiseSayingService(WiseSayingRepository wiseSayingRepository){
-        this.wiseSayingRepository=wiseSayingRepository;
+        this.wiseSayingRepository = wiseSayingRepository;
     }
 
-    public WiseSaying findById(int targetId){
+    public WiseSaying getItem(int targetId){
 
         return wiseSayingRepository.findById(targetId);
-
     }
 
-    public void update(WiseSaying wiseSaying,String newContent, String newAuthor){
+    public void modify(WiseSaying wiseSaying, String newContent, String newAuthor){
         wiseSaying.set명언내용(newContent);
         wiseSaying.set작가(newAuthor);
         wiseSayingRepository.update(wiseSaying);
     }
 
-    public WiseSaying add(String content, String author) {
+    public WiseSaying write(String content, String author) {
         return wiseSayingRepository.add(content,author);
     }
 
-    public ArrayList<WiseSaying> findAll() {
+    public ArrayList<WiseSaying> getItems() {
         return wiseSayingRepository.findAll();
     }
 
