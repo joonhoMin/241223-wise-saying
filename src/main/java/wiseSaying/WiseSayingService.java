@@ -4,38 +4,34 @@ import java.util.ArrayList;
 
 public class WiseSayingService {
 
-    //마지막 명언 번호
-    private int lastNo = 0;
+    private final WiseSayingRepository wiseSayingRepository;
 
-    //명언 저장 리스트
-    private final ArrayList<WiseSaying> list = new ArrayList<>();
+    public WiseSayingService(WiseSayingRepository wiseSayingRepository){
+        this.wiseSayingRepository=wiseSayingRepository;
+    }
 
     public WiseSaying findById(int targetId){
-        for(WiseSaying wiseSaying : list) {
-            if(wiseSaying.get번호() == targetId) {
-                return wiseSaying;
-            }
-        }
-        return null;
+
+        return wiseSayingRepository.findById(targetId);
+
     }
 
     public void update(WiseSaying wiseSaying,String newContent, String newAuthor){
         wiseSaying.set명언내용(newContent);
         wiseSaying.set작가(newAuthor);
+        wiseSayingRepository.update(wiseSaying);
     }
 
     public WiseSaying add(String content, String author) {
-        WiseSaying wiseSaying=new WiseSaying(++lastNo, content, author);
-        list.add(wiseSaying);
-        return wiseSaying;
+        return wiseSayingRepository.add(content,author);
     }
 
     public ArrayList<WiseSaying> findAll() {
-        return list;
+        return wiseSayingRepository.findAll();
     }
 
     public void remove(WiseSaying wiseSaying){
-        list.remove(wiseSaying);
+        wiseSayingRepository.remove(wiseSaying);
     }
 
 }

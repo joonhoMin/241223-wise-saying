@@ -12,7 +12,7 @@ public class WiseSayingController {
 
     public WiseSayingController(Scanner scanner){
         this.scanner=scanner;
-        this.wiseSayingService= new WiseSayingService();
+        this.wiseSayingService= new WiseSayingService(new WiseSayingRepository());
     }
 
 
